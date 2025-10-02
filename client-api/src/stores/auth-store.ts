@@ -19,6 +19,8 @@ interface AuthActions {
   register: (email: string, password: string, name: string) => Promise<void>
   logout: () => Promise<void>
   getCurrentUser: () => Promise<void>
+  forgotPassword: (email: string) => Promise<void>
+  resetPassword: (token: string, newPassword: string) => Promise<void>
   reset: () => void
 }
 
@@ -93,6 +95,28 @@ export const useAuthStore = create<AuthStore>()(
           set({ user: null, isLoading: false, error: null })
         } catch (error: any) {
           set({ user: null, isLoading: false, error: error.message })
+          throw error
+        }
+      },
+
+      forgotPassword: async (email: string) => {
+        set({ isLoading: true, error: null })
+        try {
+          await authApi.forgotPassword({ email })
+          set({ isLoading: false })
+        } catch (error: any) {
+          set({ error: error.message, isLoading: false })
+          throw error
+        }
+      },
+
+      resetPassword: async (token: string, newPassword: string) => {
+        set({ isLoading: true, error: null })
+        try {
+          await authApi.resetPassword({ token, newPassword })
+          set({ isLoading: false })
+        } catch (error: any) {
+          set({ error: error.message, isLoading: false })
           throw error
         }
       },
