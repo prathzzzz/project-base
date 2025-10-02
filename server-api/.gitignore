@@ -1,0 +1,22 @@
+# Maven / Gradle build
+/target
+/build
+/out
+
+# IDE files
+*.iml
+.idea/
+.vscode/
+*.class
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+
+# Generated files
+/.project
+/.classpath
+/.settings
